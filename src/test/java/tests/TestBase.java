@@ -10,6 +10,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.Map;
 
+import static com.codeborne.selenide.Selenide.closeWebDriver;
+
 public class TestBase {
 
 
@@ -17,10 +19,9 @@ public class TestBase {
     static void beforeAll() {
         Configuration.baseUrl = System.getProperty("baseUrl", "https://demoqa.com");
         Configuration.browser = System.getProperty("browser", "chrome");
-        Configuration.browserVersion = System.getProperty("browserVersion");
+        Configuration.browserVersion = System.getProperty("version", "122.0");
         Configuration.browserSize = System.getProperty("browserSize", "1920x1080");
-        String selenoidUrl = System.getProperty("selenoidUrl", "https://user1:1234@selenoid.autotests.cloud");
-        Configuration.remote = selenoidUrl + "/wd/hub";
+        Configuration.remote = System.getProperty("remote");
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
                 "enableVNC", true,
@@ -29,6 +30,7 @@ public class TestBase {
         Configuration.browserCapabilities = capabilities;
 
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
+        Configuration.pageLoadStrategy = "eager";
     }
 
     @AfterEach
@@ -37,6 +39,7 @@ public class TestBase {
         Attach.pageSource();
         Attach.browserConsoleLogs();
         Attach.addVideo();
+        closeWebDriver();
 
 
     }
