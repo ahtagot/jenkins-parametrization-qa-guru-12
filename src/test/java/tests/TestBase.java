@@ -18,7 +18,7 @@ public class TestBase {
         Configuration.baseUrl = System.getProperty("baseUrl", "https://demoqa.com");
         Configuration.browser = System.getProperty("browser", "chrome");
         Configuration.browserVersion = System.getProperty("version", "122.0");
-        Configuration.browserSize = System.getProperty("resolution", "1920x1080");
+        Configuration.browserSize = System.getProperty("resolution", "1440x900");
         Configuration.remote = "https://user1:1234@" + System.getProperty("remote", "selenoid.autotests.cloud") + "/wd/hub";
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
